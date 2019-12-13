@@ -29,6 +29,43 @@ app.use(express.static("public"));
 // Connect to the Mongo DB
 mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
 
+// Here Routes
+
+
+app.get("/scrape", function(req, res) {
+    axios.get("https://www.nytimes.com/")
+        .then(function(response){
+            var $ = cheerio.load(response.data);
+            const foo = $('h2')
+            foo.each(function(i, element){
+                var result = {};
+                result.title = $(this)
+                    .text();
+                    console.log(result)
+            })
+            res.send('done')
+            // console.log(response, "response")
+            // res.json(response.data)
+        })  
+        .catch(function(error){
+            console.log(error, "error")
+        })
+    // res.send("done")
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.listen(PORT, function() {
     console.log("App running on port " + PORT + "!");
   });
