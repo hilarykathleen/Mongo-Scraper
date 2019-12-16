@@ -31,6 +31,16 @@ mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true 
 
 // Here Routes
 
+// app.get("/", (req, res) => {
+//     db.Article.find({ saved: false }).sort({ _id: -1 })
+//         .then(dbArticle => {
+//             res.render("Article", { article: dbArticle })
+//         })
+//         .catch(function(err){
+//             return res.json(err)
+//         })
+// })
+
 app.get("/scrape", function(req, res) {
     axios.get("https://www.npr.org/sections/news/")
         .then(function(response){
@@ -122,42 +132,6 @@ app.get("/articles", function(req, res) {
       });
   });
 
-  app.post("/savethisarticle/:id", function(req,res){
-    db.Article.findOneAndUpdate({_id: req.params.id}, {artsave:true})
-    .then(function(dbNote){
-      res.json(dbNote)
-    })
-    .catch(function(error){
-      res.json(error)
-    })
-  })
-  
-  app.delete("/deletethisnote/:id", function(req,res){
-    db.Note.deleteOne({_id: req.params.id})
-    .then(function(){
-      res.send()
-    })
-    .catch(function(error){
-      res.json(error)
-    })
-  })
-  
-  //deletes article and all notes associated with it
-  app.delete("/deletethisarticle/:id", function(req,res){
-    db.Note.deleteMany({article: req.params.id})
-    .then(function(){
-      db.Article.deleteOne({_id:req.params.id})
-      .then(function(){
-        res.send();
-      })
-      .catch(function(err){
-        console.log(err);
-      })
-    })
-    .catch(function(error){
-      res.json(error)
-    })
-  })
 
 app.listen(PORT, function() {
     console.log("App running on port " + PORT + "!");

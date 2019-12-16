@@ -2,18 +2,9 @@
 function renderArticles() {
     $.getJSON("/articles", function (data) {
       console.log(data)
-      for (var i = (data.length-1); i > (data.length-20); i--) {
-  
-        var newCard = `<div class="card">
-        <a href="${data[i].link}"><h5 class="card-header">${data[i].title}</h5></a>
-        <div class="card-body">
-        <p class="card-text">${data[i].summary}</p>
-        <a  href="#"  data-id="${ data[i]._id}" class="btn btn-primary saveArticle">Save Article</a>
-        </div>
-        </div>`
-  
-        // $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
-        $("#articles").append(newCard);
+      for (var i = 0; i < data.length; i++) {
+        // Display the apropos information on the page
+        $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
       }
     });
   }
