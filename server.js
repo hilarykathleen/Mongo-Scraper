@@ -26,20 +26,24 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
 
+const exphbs = require("express-handlebars")
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
 // Connect to the Mongo DB
 mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
 
 // Here Routes
 
-// app.get("/", (req, res) => {
-//     db.Article.find({ saved: false }).sort({ _id: -1 })
-//         .then(dbArticle => {
-//             res.render("Article", { article: dbArticle })
-//         })
-//         .catch(function(err){
-//             return res.json(err)
-//         })
-// })
+app.get("/", (req, res) => {
+    db.Article.find({ saved: false }).sort({ _id: -1 })
+        .then(dbArticle => {
+            res.render("articles", { article: dbArticle })
+        })
+        .catch(function(err){
+            return res.json(err)
+        })
+})
 
 app.get("/scrape", function(req, res) {
     axios.get("https://www.npr.org/sections/news/")
