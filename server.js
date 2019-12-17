@@ -37,13 +37,13 @@ mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true 
 
 app.get("/", (req, res) => {
   console.log("server.js")
-    // db.Article.find({ saved: false }).sort({ _id: -1 })
-    //     .then(dbArticle => {
-    //         res.render("articles", { article: dbArticle })
-    //     })
-    //     .catch(function(err){
-    //         return res.json(err)
-    //     })
+    db.Article.find({ saved: false })
+        .then(dbArticle => {
+            res.render("articles", { articles: dbArticle })
+        })
+        .catch(function(err){
+            return res.json(err)
+        })
 })
 
 app.get("/scrape", function(req, res) {
@@ -75,13 +75,13 @@ app.get("/scrape", function(req, res) {
                 result.save = false;
 
             // pushing results into database
-            db.Article.create(result)
-            .then(function(dbArticle){
-            console.log(dbArticle)
-            })
-            .catch(function(err){
-            return res.json(err)
-      })
+      //       db.Article.create(result)
+      //       .then(function(dbArticle){
+      //       console.log(dbArticle)
+      //       })
+      //       .catch(function(err){
+      //       return res.json(err)
+      // })
     });
             res.send("scrape complete")
   });
