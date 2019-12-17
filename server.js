@@ -31,7 +31,11 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/unit18Populate";
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+
 
 // Here Routes
 
@@ -75,13 +79,13 @@ app.get("/scrape", function(req, res) {
                 result.save = false;
 
             // pushing results into database
-      //       db.Article.create(result)
-      //       .then(function(dbArticle){
-      //       console.log(dbArticle)
-      //       })
-      //       .catch(function(err){
-      //       return res.json(err)
-      // })
+            db.Article.create(result)
+            .then(function(dbArticle){
+            console.log(dbArticle)
+            })
+            .catch(function(err){
+            return res.json(err)
+      })
     });
             res.send("scrape complete")
   });
