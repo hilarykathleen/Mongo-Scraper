@@ -1,4 +1,7 @@
-// $(document).ready(function(){
+
+
+
+$(document).ready(function(){
   console.log("this is being called")
 //   function getArticles() {
 //     $.get("/scrape").then(function(data){
@@ -10,6 +13,31 @@
 //   getArticles();
 
 // })
+
+$(document).on('click', '.save-button', function(event){
+  // console.log(event.target)
+  console.log(event.target.id)
+  console.log("this is being clicked");
+  // $.ajax({
+  //   method: 'PUT',
+  //   url: "/savedArticles/:id",
+  //   data: event.target.id,
+  //   // dataType: 'json',
+  //   // success: callback
+  // });
+
+  // $.put("/savedArticles/" + event.target.id).then()
+  $.ajax({
+    method: "PUT",
+    url: "/savedArticles/" + event.target.id, 
+    data: event.target.id
+  }).then(
+    function(data) {
+      console.log("pass id");
+      }
+  );
+  });
+
 
 
 
@@ -47,3 +75,4 @@
 //         renderArticles();
 //       })
 //   })
+})
